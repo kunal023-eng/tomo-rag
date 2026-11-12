@@ -8,8 +8,8 @@ from tomo.loader import load_document_text
 from tomo.search import find_top_k_chunks
 
 DEFAULT_DOCUMENTS_DIRECTORY = Path("documents")
-SUPPORTED_FILE_EXTENSIONS = {".pdf", ".txt", ".md", ".docx", ".pptx"}
-NUMBER_OF_TOP_CHUNKS = 4
+SUPPORTED_FILE_EXTENSIONS = {".pdf", ".txt", ".md", ".docx", ".pptx", ".xlsx"}
+NUMBER_OF_TOP_CHUNKS = 8
 
 
 def main():

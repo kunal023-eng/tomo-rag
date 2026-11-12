@@ -1,4 +1,4 @@
-def split_text_into_chunks(text, words_per_chunk=400, overlap_words=80):
+def split_text_into_chunks(text, words_per_chunk=200, overlap_words=40):
     if words_per_chunk <= 0:
         raise ValueError("words_per_chunk must be greater than zero")
     if overlap_words < 0:

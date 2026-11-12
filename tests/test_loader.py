@@ -91,3 +91,30 @@ def test_loads_markdown_file_as_plain_text():
         loaded_text = load_document_text(markdown_path)
         assert "# Heading" in loaded_text
         assert "Some markdown body." in loaded_text
+
+
+def test_loads_xlsx_file_with_header_labels():
+    from openpyxl import Workbook
+    with tempfile.TemporaryDirectory() as temp_directory:
+        xlsx_path = Path(temp_directory) / "applicants.xlsx"
+        workbook = Workbook()
+        worksheet = workbook.active
+        worksheet.title = "Applicants"
+        worksheet.append(["Name", "Age", "GPA"])
+        worksheet.append(["Kunal", 22, 3.8])
+        workbook.save(xlsx_path)
+        loaded_text = load_document_text(xlsx_path)
+        assert "[Sheet: Applicants]" in loaded_text
+        assert "Name: Kunal" in loaded_text
+        assert "GPA: 3.8" in loaded_text
+
+
+def test_raises_for_corrupt_xlsx_file():
+    with tempfile.TemporaryDirectory() as temp_directory:
+        corrupt_path = Path(temp_directory) / "corrupt.xlsx"
+        corrupt_path.write_text("this is not a real xlsx file", encoding="utf-8")
+        try:
+            load_document_text(corrupt_path)
+        except ValueError:
+            return
+        raise AssertionError("Expected ValueError for corrupt xlsx file")
